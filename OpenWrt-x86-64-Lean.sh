@@ -26,6 +26,7 @@ sed -i 's#frontend ss-in#frontend HAProxy-in#g' package/lean/luci-app-haproxy-tc
 sed -i 's#backend ss-out#backend HAProxy-out#g' package/lean/luci-app-haproxy-tcp/root/etc/haproxy_init.sh #修改haproxy默认节点名称
 sed -i 's#option commit_interval 24h#option commit_interval 10m#g' feeds/packages/net/nlbwmon/files/nlbwmon.config #修改流量统计写入为10分钟
 sed -i 's#option database_directory /var/lib/nlbwmon#option database_directory /etc/config/nlbwmon_data#g' feeds/packages/net/nlbwmon/files/nlbwmon.config #修改流量统计数据存放默认位置
+sed -i 's#page = entry({"admin", "network"#page = entry({"admin", "services"#g' package/OpenAppFilter/luci-app-oaf/luasrc/controller/appfilter.lua #更换应用控制菜单位置
 
 #创建自定义配置文件 - OpenWrt-x86-64
 
@@ -134,12 +135,14 @@ EOF
 cat >> .config <<EOF
 # CONFIG_PACKAGE_luci-app-transmission is not set #TR离线下载
 # CONFIG_PACKAGE_luci-app-qbittorrent is not set #QB离线下载
+# CONFIG_PACKAGE_luci-app-amule is not set #电驴离线下载
 # CONFIG_PACKAGE_luci-app-xlnetacc is not set #迅雷快鸟
 # CONFIG_PACKAGE_luci-app-zerotier is not set #zerotier内网穿透
 # CONFIG_PACKAGE_luci-app-hd-idle is not set #磁盘休眠
 # CONFIG_PACKAGE_luci-app-wrtbwmon is not set #实时流量监测
 # CONFIG_PACKAGE_luci-app-unblockmusic is not set #解锁网易云灰色歌曲
 # CONFIG_PACKAGE_luci-app-airplay2 is not set #Apple AirPlay2音频接收服务器
+# CONFIG_PACKAGE_luci-app-music-remote-center is not set #PCHiFi数字转盘遥控
 # CONFIG_PACKAGE_luci-app-usb-printer is not set #USB打印机
 # CONFIG_PACKAGE_luci-app-usb-cpufreq is not set #CPU频率设置
 # CONFIG_PACKAGE_luci-app-usb-diskman is not set #磁盘分区管理
@@ -149,6 +152,7 @@ cat >> .config <<EOF
 # CONFIG_PACKAGE_luci-app-v2ray-server is not set #V2ray服务器
 # CONFIG_PACKAGE_luci-app-pptp-server is not set #PPTP VPN 服务器
 # CONFIG_PACKAGE_luci-app-ipsec-vpnd is not set #ipsec VPN服务
+# CONFIG_PACKAGE_luci-app-openvpn-server is not set #openvpn服务
 # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Kcptun is not set #Kcptun客户端
 #
 # 文件共享相关(禁用):
