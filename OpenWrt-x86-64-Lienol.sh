@@ -175,7 +175,6 @@ cat >> .config <<EOF
 # VPN相关插件(禁用):
 #
 # CONFIG_PACKAGE_luci-app-ipsec-vpnserver-manyusers is not set #ipsec VPN服务
-# CONFIG_PACKAGE_luci-app-zerotier is not set #Zerotier内网穿透
 # CONFIG_PACKAGE_luci-app-pppoe-relay is not set #PPPoE穿透
 # CONFIG_PACKAGE_luci-app-pppoe-server is not set #PPPoE服务器
 # CONFIG_PACKAGE_luci-app-pptp-vpnserver-manyusers is not set #PPTP VPN 服务器
@@ -206,6 +205,7 @@ CONFIG_PACKAGE_luci-app-webadmin=y #Web管理页面设置
 CONFIG_PACKAGE_luci-app-filetransfer=y #系统-文件传输
 CONFIG_PACKAGE_luci-app-autoreboot=y #定时重启
 CONFIG_PACKAGE_luci-app-frpc=y #Frp内网穿透
+CONFIG_PACKAGE_luci-app-zerotier=y #zerotier内网穿透
 CONFIG_PACKAGE_luci-app-upnp=y #通用即插即用UPnP(端口自动转发)
 CONFIG_PACKAGE_luci-app-softethervpn=y #SoftEtherVPN服务器
 CONFIG_DEFAULT_luci-app-vlmcsd=y #KMS激活服务器
