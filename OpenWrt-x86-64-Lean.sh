@@ -150,7 +150,6 @@ cat >> .config <<EOF
 # CONFIG_PACKAGE_luci-app-qbittorrent is not set #QB离线下载
 # CONFIG_PACKAGE_luci-app-amule is not set #电驴离线下载
 # CONFIG_PACKAGE_luci-app-xlnetacc is not set #迅雷快鸟
-# CONFIG_PACKAGE_luci-app-zerotier is not set #zerotier内网穿透
 # CONFIG_PACKAGE_luci-app-hd-idle is not set #磁盘休眠
 # CONFIG_PACKAGE_luci-app-wrtbwmon is not set #实时流量监测
 # CONFIG_PACKAGE_luci-app-unblockmusic is not set #解锁网易云灰色歌曲
@@ -193,6 +192,7 @@ CONFIG_PACKAGE_luci-app-flowoffload=y #Turbo ACC 网络加速
 CONFIG_PACKAGE_luci-app-softethervpn=y #SoftEtherVPN服务器
 CONFIG_PACKAGE_luci-app-haproxy-tcp=y #Haproxy负载均衡
 CONFIG_PACKAGE_luci-app-frpc=y #Frp内网穿透
+CONFIG_PACKAGE_luci-app-zerotier=y #zerotier内网穿透
 CONFIG_PACKAGE_luci-app-nlbwmon=y #宽带流量监控
 EOF
 
