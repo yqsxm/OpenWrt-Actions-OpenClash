@@ -17,6 +17,7 @@ cat feeds.conf.default
 
 # 添加第三方软件包
 # svn co https://github.com/kang-mk/openwrt-app-package/trunk/helloworld package/helloworld
+svn co https://github.com/kang-mk/openwrt-app-package/trunk/luci-app-smartinfo package/luci-app-smartinfo
 git clone https://github.com/destan19/OpenAppFilter package/OpenAppFilter
 git clone https://github.com/vernesong/OpenClash package/openclash
 git clone https://github.com/tty228/luci-app-serverchan package/luci-app-serverchan
