@@ -2,17 +2,17 @@
 name: OpenWrt-x86-64-Lean
 
 on:
-# 定时触发(每周一早4点)
-  schedule:
-    - cron: 0 20 * * 1
+# 定时触发(每天早4点)
+#  schedule:
+#    - cron: 0 20 * * *
 
 # release触发
   release:
     types: [published]
 
 # 点赞触发
-#  watch:
-#    types: [started]
+  watch:
+    types: [started]
 
 # 编辑触发
 #  push:
@@ -32,7 +32,7 @@ env:
   REPO_BRANCH: master
   DIY_SH: OpenWrt-x86-64-Lean.sh
   SSH_ACTIONS: false
-  UPLOAD_BIN_DIR: true
+  UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   TZ: Asia/Shanghai
 
