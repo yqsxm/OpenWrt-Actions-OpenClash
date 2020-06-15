@@ -1,20 +1,19 @@
   
 #!/bin/bash
 
+cd openwrt
+
 # 安装额外依赖软件包
 # sudo -E apt-get -y install rename
 
 # 更新feeds文件
-cd openwrt
-sed -i 's@#src-git helloworld@src-git helloworld@g' feeds.conf.default #启用helloworld
+# sed -i 's@#src-git helloworld@src-git helloworld@g' feeds.conf.default #启用helloworld
 cat feeds.conf.default
 
 # 更新并安装源
 ./scripts/feeds clean
 ./scripts/feeds update -a && ./scripts/feeds install -a
 
-# 替换默认Argon主题（最新版本适配好像有问题,暂取消）
-# rm -rf package/lean/luci-theme-argon && git clone https://github.com/jerrykuku/luci-theme-argon package/luci-theme-argon
 # 替换更新haproxy默认版本
 rm -rf feeds/packages/net/haproxy && svn co https://github.com/kang-mk/openwrt-app-package/trunk/haproxy feeds/packages/net/haproxy
 
@@ -235,6 +234,8 @@ EOF
 
 # LuCI主题:
 cat >> .config <<EOF
+CONFIG_PACKAGE_luci-theme-atmaterial=y
+CONFIG_PACKAGE_luci-theme-argon_new=y
 CONFIG_PACKAGE_luci-theme-argon=y
 CONFIG_PACKAGE_luci-theme-netgear=y
 EOF

@@ -1,11 +1,12 @@
 
 #!/bin/bash
 
+cd openwrt
+
 # 安装额外依赖软件包
 # sudo -E apt-get -y install rename
 
 # 更新feeds文件
-cd openwrt
 # sed -i 's#lienol https://github.com/Lienol/openwrt-package#lienol https://github.com/kang-mk/Lienol-openwrt-package#g' feeds.conf.default #更换默认包源
 cat feeds.conf.default
 
@@ -227,6 +228,8 @@ EOF
 
 # LuCI主题:
 cat >> .config <<EOF
+CONFIG_PACKAGE_luci-theme-atmaterial=y
+CONFIG_PACKAGE_luci-theme-argon_new=y
 CONFIG_PACKAGE_luci-theme-argon-dark-mod=y
 CONFIG_PACKAGE_luci-theme-argon-light-mod=y
 CONFIG_PACKAGE_luci-theme-bootstrap=y
