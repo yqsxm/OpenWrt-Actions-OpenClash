@@ -202,7 +202,6 @@ EOF
 cat >> .config <<EOF
 CONFIG_PACKAGE_luci-theme-atmaterial=y
 CONFIG_PACKAGE_luci-theme-argon_new=y
-CONFIG_PACKAGE_luci-theme-argon=y
 CONFIG_PACKAGE_luci-theme-netgear=y
 EOF
 
