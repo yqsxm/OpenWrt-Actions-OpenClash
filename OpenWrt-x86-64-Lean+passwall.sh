@@ -14,9 +14,6 @@ cat feeds.conf.default
 ./scripts/feeds clean
 ./scripts/feeds update -a && ./scripts/feeds install -a
 
-# 替换更新haproxy默认版本
-rm -rf feeds/packages/net/haproxy && svn co https://github.com/kang-mk/openwrt-app-package/trunk/haproxy feeds/packages/net/haproxy
-
 # 添加第三方软件包
 git clone https://github.com/kenzok8/openwrt-packages package/openwrt-packages
 git clone https://github.com/kenzok8/small package/small
@@ -26,6 +23,9 @@ git clone https://github.com/tty228/luci-app-serverchan package/luci-app-serverc
 # 再次更新并安装源
 ./scripts/feeds clean
 ./scripts/feeds update -a && ./scripts/feeds install -a
+
+# 替换更新haproxy默认版本
+rm -rf feeds/packages/net/haproxy && svn co https://github.com/kang-mk/openwrt-app-package/trunk/haproxy feeds/packages/net/haproxy
 
 # 自定义定制选项
 sed -i 's#192.168.1.1#10.0.0.1#g' package/base-files/files/bin/config_generate #定制默认IP
