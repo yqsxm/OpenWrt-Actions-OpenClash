@@ -1,8 +1,8 @@
 
-name: OpenWrt-x86-64-Lean+passwall
+name: OpenWrt-x86-64-Lienol-ssrplus
 
 on:
-# 定时触发(每周一早4点)
+# 定时触发(每天早4点)
   schedule:
     - cron: 0 20 * * 1
 
@@ -28,11 +28,11 @@ on:
 #UPLOAD_FIRMWARE上传固件目录
 
 env:
-  REPO_URL: https://github.com/coolsnowwolf/lede
-  REPO_BRANCH: master
-  DIY_SH: OpenWrt-x86-64-Lean+passwall.sh
+  REPO_URL: https://github.com/Lienol/openwrt
+  REPO_BRANCH: dev-19.07
+  DIY_SH: OpenWrt-x86-64-Lienol-ssrplus.sh
   SSH_ACTIONS: false
-  UPLOAD_BIN_DIR: true
+  UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
   TZ: Asia/Shanghai
 
@@ -99,7 +99,7 @@ jobs:
       uses: actions/upload-artifact@master
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
-        name: OpenWrt_bin_Lean_passwall_${{ env.FILENAME }}
+        name: OpenWrt-x86-64-Lienol_ssrplus_${{ env.FILENAME }}
         path: openwrt/bin
 
     - name: 整理文件
@@ -114,5 +114,5 @@ jobs:
     - name: 上传固件
       uses: actions/upload-artifact@master
       with:
-        name: OpenWrt_firmware_Lean_passwall_${{ env.FILENAME }}
+        name: OpenWrt-x86-64-Lienol_ssrplus_${{ env.FILENAME }}
         path: ./artifact/

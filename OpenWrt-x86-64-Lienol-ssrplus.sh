@@ -1,4 +1,4 @@
-  
+
 #!/bin/bash
 
 cd openwrt
@@ -7,7 +7,7 @@ cd openwrt
 # sudo -E apt-get -y install rename
 
 # 更新feeds文件
-# sed -i 's@#src-git helloworld@src-git helloworld@g' feeds.conf.default #启用helloworld
+# sed -i 's#lienol https://github.com/Lienol/openwrt-package#lienol https://github.com/kang-mk/Lienol-openwrt-package#g' feeds.conf.default #更换默认包源
 cat feeds.conf.default
 
 # 更新并安装源
@@ -16,39 +16,26 @@ cat feeds.conf.default
 
 # 添加第三方软件包
 git clone https://github.com/kenzok8/openwrt-packages package/openwrt-packages
-git clone https://github.com/kenzok8/small package/small
-git clone https://github.com/destan19/OpenAppFilter package/OpenAppFilter
 git clone https://github.com/tty228/luci-app-serverchan package/luci-app-serverchan
 
 # 再次更新并安装源
 ./scripts/feeds clean
 ./scripts/feeds update -a && ./scripts/feeds install -a
 
-# 替换更新haproxy默认版本
-rm -rf feeds/packages/net/haproxy && svn co https://github.com/kang-mk/openwrt-app-package/trunk/haproxy feeds/packages/net/haproxy
-
 # 自定义定制选项
 sed -i 's#192.168.1.1#10.0.0.1#g' package/base-files/files/bin/config_generate #定制默认IP
-sed -i 's@.*CYXluq4wUazHjmCDBCqXF*@#&@g' package/lean/default-settings/files/zzz-default-settings #取消系统默认密码
+sed -i 's#max-width:200px#max-width:1000px#g' feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm #修改首页样式
+sed -i 's#max-width:200px#max-width:1000px#g' feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/index_x86.htm #修改X86首页样式
 sed -i 's#option commit_interval 24h#option commit_interval 10m#g' feeds/packages/net/nlbwmon/files/nlbwmon.config #修改流量统计写入为10分钟
 sed -i 's#option database_directory /var/lib/nlbwmon#option database_directory /etc/config/nlbwmon_data#g' feeds/packages/net/nlbwmon/files/nlbwmon.config #修改流量统计数据存放默认位置
 
 # luci-app-haproxy定制项
-sed -i 's@stats auth admin:root*@#&@g' package/lean/luci-app-haproxy-tcp/root/etc/haproxy_init.sh #取消haproxy默认密码
-sed -i 's#stats uri /haproxy#stats uri /#g' package/lean/luci-app-haproxy-tcp/root/etc/haproxy_init.sh #修改haproxy管理路径
-sed -i 's#1111#1188#g' package/lean/luci-app-haproxy-tcp/root/etc/haproxy_init.sh #修改haproxy管理端口
-sed -i 's#2222#1181#g' package/lean/luci-app-haproxy-tcp/root/etc/haproxy_init.sh #修改haproxy管理端口
-sed -i 's#frontend ss-in#frontend HAProxy-in#g' package/lean/luci-app-haproxy-tcp/root/etc/haproxy_init.sh #修改haproxy默认节点名称
-sed -i 's#backend ss-out#backend HAProxy-out#g' package/lean/luci-app-haproxy-tcp/root/etc/haproxy_init.sh #修改haproxy默认节点名称
-sed -i 's#:1111/haproxy#:1188#g' package/lean/luci-app-haproxy-tcp/luasrc/model/cbi/haproxy.lua #修改haproxy管理端口
-sed -i 's#2222#1181#g' package/lean/luci-app-haproxy-tcp/luasrc/model/cbi/haproxy.lua #修改haproxy负载均衡端口
-sed -i 's#输入用户名admin##g' package/lean/luci-app-haproxy-tcp/luasrc/model/cbi/haproxy.lua #修改haproxy管理页
-sed -i 's#用户名admin##g' package/lean/luci-app-haproxy-tcp/luasrc/model/cbi/haproxy.lua #修改haproxy管理页
-sed -i 's#密码root##g' package/lean/luci-app-haproxy-tcp/luasrc/model/cbi/haproxy.lua #修改haproxy管理页
-sed -i 's#使用说明请##g' package/lean/luci-app-haproxy-tcp/luasrc/model/cbi/haproxy.lua #修改haproxy管理页
-sed -i 's#点击这里##g' package/lean/luci-app-haproxy-tcp/luasrc/model/cbi/haproxy.lua #修改haproxy管理页
+# sed -i 's#o.default = "admin"#o.default = ""#g' package/luci-app-passwall/luasrc/model/cbi/passwall/haproxy.lua #去除haproxy默认密码(最新版已无密码)
+# sed -i 's#1188#1111#g' package/luci-app-passwall/luasrc/model/cbi/passwall/haproxy.lua #修改haproxy默认管理端口
+# sed -i 's#1181#2222#g' package/luci-app-passwall/luasrc/model/cbi/passwall/haproxy.lua #修改haproxy默认负载均衡端口
+# sed -i 's#1188#1111#g' package/luci-app-passwall/po/zh-cn/passwall.po #修改haproxy默认管理端口
 
-#创建自定义配置文件 - OpenWrt-x86-64
+# 创建自定义配置文件 - OpenWrt-x86-64
 
 rm -f ./.config*
 touch ./.config
@@ -111,8 +98,8 @@ EOF
 
 # IPv6支持:
 cat >> .config <<EOF
-CONFIG_PACKAGE_dnsmasq_full_dhcpv6=y
 CONFIG_PACKAGE_ipv6helper=y
+CONFIG_PACKAGE_dnsmasq_full_dhcpv6=y
 EOF
 
 # 多文件系统支持:
@@ -137,10 +124,9 @@ EOF
 # 第三方插件选择:
 cat >> .config <<EOF
 CONFIG_PACKAGE_luci-app-oaf=y #应用过滤
-CONFIG_PACKAGE_luci-app-openclash=y #OpenClash
+CONFIG_PACKAGE_luci-app-openclash=y #OpenClash客户端
 CONFIG_PACKAGE_luci-app-serverchan=y #微信推送
 CONFIG_PACKAGE_luci-app-eqos=y #IP限速
-# CONFIG_PACKAGE_luci-app-adguardhome=y #ADguardhome
 EOF
 
 # ShadowsocksR插件:
@@ -189,43 +175,58 @@ EOF
 cat >> .config <<EOF
 CONFIG_PACKAGE_luci-app-adbyby-plus=y #adbyby去广告
 CONFIG_PACKAGE_luci-app-webadmin=y #Web管理页面设置
-CONFIG_PACKAGE_luci-app-ddns=y #DDNS服务
-CONFIG_DEFAULT_luci-app-vlmcsd=y #KMS激活服务器
 CONFIG_PACKAGE_luci-app-filetransfer=y #系统-文件传输
 CONFIG_PACKAGE_luci-app-autoreboot=y #定时重启
-CONFIG_PACKAGE_luci-app-upnp=y #通用即插即用UPnP(端口自动转发)
-CONFIG_PACKAGE_luci-app-accesscontrol=y #上网时间控制
-CONFIG_PACKAGE_luci-app-wol=y #网络唤醒
-CONFIG_PACKAGE_luci-app-sqm=y #SQM智能队列管理
-CONFIG_PACKAGE_luci-app-flowoffload=y #Turbo ACC 网络加速
-CONFIG_PACKAGE_luci-app-softethervpn=y #SoftEtherVPN服务器
-CONFIG_PACKAGE_luci-app-haproxy-tcp=y #Haproxy负载均衡
 CONFIG_PACKAGE_luci-app-frpc=y #Frp内网穿透
+CONFIG_PACKAGE_luci-app-upnp=y #通用即插即用UPnP(端口自动转发)
+CONFIG_PACKAGE_luci-app-softethervpn=y #SoftEtherVPN服务器
+CONFIG_DEFAULT_luci-app-vlmcsd=y #KMS激活服务器
+CONFIG_PACKAGE_luci-app-sqm=y #SQM智能队列管理
+CONFIG_PACKAGE_luci-app-ddns=y #DDNS服务
+CONFIG_PACKAGE_luci-app-wol=y #网络唤醒
+CONFIG_PACKAGE_luci-app-control-mia=y #时间控制
+CONFIG_PACKAGE_luci-app-control-timewol=y #定时唤醒
+CONFIG_PACKAGE_luci-app-control-webrestriction=y #访问限制
+CONFIG_PACKAGE_luci-app-control-weburl=y #网址过滤
+CONFIG_PACKAGE_luci-app-flowoffload=y #Turbo ACC 网络加速
 CONFIG_PACKAGE_luci-app-nlbwmon=y #宽带流量监控
-# CONFIG_PACKAGE_luci-app-diskman is not set #磁盘管理磁盘信息
-# CONFIG_PACKAGE_luci-app-transmission is not set #TR离线下载
-# CONFIG_PACKAGE_luci-app-qbittorrent is not set #QB离线下载
-# CONFIG_PACKAGE_luci-app-amule is not set #电驴离线下载
-# CONFIG_PACKAGE_luci-app-xlnetacc is not set #迅雷快鸟
 CONFIG_PACKAGE_luci-app-zerotier=y #zerotier内网穿透
+# CONFIG_PACKAGE_luci-app-diskman is not set #磁盘管理磁盘信息
+# CONFIG_PACKAGE_luci-app-smartdns is not set #smartdnsDNS服务
+# CONFIG_PACKAGE_luci-app-adguardhome is not set #ADguardHome去广告服务
+# CONFIG_PACKAGE_luci-app-unblockmusic is not set #解锁网易云灰色歌曲
+# CONFIG_PACKAGE_luci-app-unblockneteasemusic-go is not set #解锁网易云灰色歌曲
+# CONFIG_PACKAGE_luci-app-unblockneteasemusic-mini is not set #解锁网易云灰色歌曲
+# CONFIG_PACKAGE_luci-app-xlnetacc is not set #迅雷快鸟
+# CONFIG_PACKAGE_luci-app-usb-printer is not set #USB打印机
+# CONFIG_PACKAGE_luci-app-mwan3helper is not set #多拨负载均衡
+# CONFIG_PACKAGE_luci-app-mwan3 is not set #多线多拨
 # CONFIG_PACKAGE_luci-app-hd-idle is not set #磁盘休眠
 # CONFIG_PACKAGE_luci-app-wrtbwmon is not set #实时流量监测
-# CONFIG_PACKAGE_luci-app-unblockmusic is not set #解锁网易云灰色歌曲
-# CONFIG_PACKAGE_luci-app-airplay2 is not set #Apple AirPlay2音频接收服务器
-# CONFIG_PACKAGE_luci-app-music-remote-center is not set #PCHiFi数字转盘遥控
-# CONFIG_PACKAGE_luci-app-usb-printer is not set #USB打印机
+#
+# passwall相关(禁用):
+#
 #
 # VPN相关插件(禁用):
 #
+# CONFIG_PACKAGE_luci-app-ipsec-vpnserver-manyusers is not set #ipsec VPN服务
+# CONFIG_PACKAGE_luci-app-pppoe-relay is not set #PPPoE穿透
+# CONFIG_PACKAGE_luci-app-pppoe-server is not set #PPPoE服务器
+# CONFIG_PACKAGE_luci-app-pptp-vpnserver-manyusers is not set #PPTP VPN 服务器
+# CONFIG_PACKAGE_luci-app-trojan-server is not set #Trojan服务器
 # CONFIG_PACKAGE_luci-app-v2ray-server is not set #V2ray服务器
-# CONFIG_PACKAGE_luci-app-pptp-server is not set #PPTP VPN 服务器
-# CONFIG_PACKAGE_luci-app-ipsec-vpnd is not set #ipsec VPN服务
-# CONFIG_PACKAGE_luci-app-openvpn-server is not set #openvpn服务
-# CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Kcptun is not set #Kcptun客户端
+# CONFIG_PACKAGE_luci-app-brook-server is not set #brook服务端
+# CONFIG_PACKAGE_luci-app-ssr-libev-server is not set #ssr-libev服务端
+# CONFIG_PACKAGE_luci-app-ssr-python-pro-server is not set #ssr-python服务端
+# CONFIG_PACKAGE_luci-app-kcptun is not set #Kcptun客户端
 #
 # 文件共享相关(禁用):
 #
+# CONFIG_PACKAGE_luci-app-aria2 is not set #Aria2离线下载
 # CONFIG_PACKAGE_luci-app-minidlna is not set #miniDLNA服务
+# CONFIG_PACKAGE_luci-app-kodexplorer is not set #可到私有云
+# CONFIG_PACKAGE_luci-app-filebrowser is not set #File Browser私有云
+# CONFIG_PACKAGE_luci-app-fileassistant is not set #文件助手
 # CONFIG_PACKAGE_luci-app-vsftpd is not set #FTP 服务器
 # CONFIG_PACKAGE_luci-app-samba is not set #网络共享
 # CONFIG_PACKAGE_autosamba is not set #网络共享
@@ -234,9 +235,14 @@ EOF
 
 # LuCI主题:
 cat >> .config <<EOF
-CONFIG_PACKAGE_luci-theme-atmaterial=y
-CONFIG_PACKAGE_luci-theme-argon_new=y
-CONFIG_PACKAGE_luci-theme-netgear=y
+CONFIG_PACKAGE_luci-theme-argon-dark-mod=y
+CONFIG_PACKAGE_luci-theme-argon-light-mod=y
+CONFIG_PACKAGE_luci-theme-bootstrap=y
+# CONFIG_PACKAGE_luci-theme-bootstrap-mod is not set
+# CONFIG_PACKAGE_luci-theme-darkmatter is not set
+# CONFIG_PACKAGE_luci-theme-freifunk-generic is not set
+# CONFIG_PACKAGE_luci-theme-material is not set
+# CONFIG_PACKAGE_luci-theme-openwrt is not set
 EOF
 
 # 常用软件包:
@@ -248,25 +254,20 @@ CONFIG_PACKAGE_nano=y
 # CONFIG_PACKAGE_tree=y
 # CONFIG_PACKAGE_vim-fuller=y
 CONFIG_PACKAGE_wget=y
+CONFIG_PACKAGE_bash=y
+CONFIG_PACKAGE_node=y
 EOF
 
 # 其他软件包:
 cat >> .config <<EOF
 CONFIG_HAS_FPU=y
-CONFIG_PACKAGE_zram-swap=y
-EOF
-
-# 取消编译VMware镜像以及镜像填充 (不要删除被缩进的注释符号):
-cat >> .config <<EOF
-# CONFIG_TARGET_IMAGES_PAD is not set
-# CONFIG_VMDK_IMAGES is not set
 EOF
 
 # 
 # ========================固件定制部分结束========================
 # 
 
-
 sed -i 's/^[ \t]*//g' ./.config
 
 # 配置文件创建完成
+
