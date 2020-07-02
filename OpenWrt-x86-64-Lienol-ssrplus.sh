@@ -7,7 +7,7 @@ cd openwrt
 # sudo -E apt-get -y install rename
 
 # 更新feeds文件
-# sed -i 's#lienol https://github.com/Lienol/openwrt-package#lienol https://github.com/kang-mk/Lienol-openwrt-package#g' feeds.conf.default #更换默认包源
+# sed -i 's#lienol https://github.com/Lienol/openwrt-package#lienol https://github.com/db-one/Lienol-openwrt-package#g' feeds.conf.default #更换默认包源
 cat feeds.conf.default
 
 # 更新并安装源
