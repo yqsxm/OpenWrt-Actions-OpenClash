@@ -16,11 +16,12 @@ cat feeds.conf.default
 
 # 添加第三方软件包
 git clone https://github.com/kenzok8/openwrt-packages package/openwrt-packages
+git clone https://github.com/destan19/OpenAppFilter package/OpenAppFilter
 git clone https://github.com/tty228/luci-app-serverchan package/luci-app-serverchan
 
-# 再次更新并安装源
-./scripts/feeds clean
-./scripts/feeds update -a && ./scripts/feeds install -a
+# 替换更新passwall和ssrplus+
+rm -rf package/openwrt-packages/luci-app-passwall && svn co https://github.com/Lienol/openwrt-package/trunk/lienol/luci-app-passwall package/openwrt-packages/luci-app-passwall
+rm -rf package/openwrt-packages/luci-app-ssr-plus && svn co https://github.com/fw876/helloworld package/openwrt-packages/helloworld
 
 # 自定义定制选项
 sed -i 's#192.168.1.1#10.0.0.1#g' package/base-files/files/bin/config_generate #定制默认IP
@@ -181,7 +182,6 @@ CONFIG_PACKAGE_luci-app-frpc=y #Frp内网穿透
 CONFIG_PACKAGE_luci-app-upnp=y #通用即插即用UPnP(端口自动转发)
 CONFIG_PACKAGE_luci-app-softethervpn=y #SoftEtherVPN服务器
 CONFIG_DEFAULT_luci-app-vlmcsd=y #KMS激活服务器
-CONFIG_PACKAGE_luci-app-sqm=y #SQM智能队列管理
 CONFIG_PACKAGE_luci-app-ddns=y #DDNS服务
 CONFIG_PACKAGE_luci-app-wol=y #网络唤醒
 CONFIG_PACKAGE_luci-app-control-mia=y #时间控制
@@ -203,6 +203,7 @@ CONFIG_PACKAGE_luci-app-zerotier=y #zerotier内网穿透
 # CONFIG_PACKAGE_luci-app-mwan3 is not set #多线多拨
 # CONFIG_PACKAGE_luci-app-hd-idle is not set #磁盘休眠
 # CONFIG_PACKAGE_luci-app-wrtbwmon is not set #实时流量监测
+#CONFIG_PACKAGE_luci-app-sqm is not set #SQM智能队列管理
 #
 # passwall相关(禁用):
 #
