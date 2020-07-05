@@ -15,13 +15,13 @@ cat feeds.conf.default
 ./scripts/feeds update -a && ./scripts/feeds install -a
 
 # 添加第三方软件包
-git clone https://github.com/kenzok8/openwrt-packages package/openwrt-packages
-git clone https://github.com/destan19/OpenAppFilter package/OpenAppFilter
-git clone https://github.com/tty228/luci-app-serverchan package/luci-app-serverchan
+git clone https://github.com/db-one/openwrt-app-packages package/openwrt-packages
+git clone https://github.com/db-one/OpenAppFilter package/OpenAppFilter
+git clone https://github.com/db-one/luci-app-serverchan package/luci-app-serverchan
 
 # 替换更新passwall和ssrplus+
-rm -rf package/openwrt-packages/luci-app-passwall && svn co https://github.com/Lienol/openwrt-package/trunk/lienol/luci-app-passwall package/openwrt-packages/luci-app-passwall
-rm -rf package/openwrt-packages/luci-app-ssr-plus && svn co https://github.com/fw876/helloworld package/openwrt-packages/helloworld
+rm -rf package/openwrt-packages/luci-app-passwall && svn co https://github.com/db-one/Lienol-openwrt-package/trunk/lienol/luci-app-passwall package/openwrt-packages/luci-app-passwall
+rm -rf package/openwrt-packages/luci-app-ssr-plus && svn co https://github.com/db-one/helloworld package/openwrt-packages/helloworld
 
 # 自定义定制选项
 sed -i 's#192.168.1.1#10.0.0.1#g' package/base-files/files/bin/config_generate #定制默认IP
