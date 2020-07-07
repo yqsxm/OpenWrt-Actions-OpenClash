@@ -15,13 +15,13 @@ cat feeds.conf.default
 ./scripts/feeds update -a && ./scripts/feeds install -a
 
 # 添加第三方软件包
-git clone https://github.com/db-one/openwrt-app-packages package/openwrt-packages
-git clone https://github.com/db-one/OpenAppFilter package/OpenAppFilter
-git clone https://github.com/db-one/luci-app-serverchan package/luci-app-serverchan
+git clone https://github.com/kenzok8/openwrt-packages package/openwrt-packages
+git clone https://github.com/destan19/OpenAppFilter package/OpenAppFilter
+git clone https://github.com/tty228/luci-app-serverchan package/luci-app-serverchan
 
 # 替换更新passwall和ssrplus+
-rm -rf package/openwrt-packages/luci-app-passwall && svn co https://github.com/db-one/Lienol-openwrt-package/trunk/lienol/luci-app-passwall package/openwrt-packages/luci-app-passwall
-rm -rf package/openwrt-packages/luci-app-ssr-plus && svn co https://github.com/db-one/helloworld package/openwrt-packages/helloworld
+rm -rf package/openwrt-packages/luci-app-passwall && svn co https://github.com/Lienol/openwrt-package/trunk/lienol/luci-app-passwall package/openwrt-packages/luci-app-passwall
+rm -rf package/openwrt-packages/luci-app-ssr-plus && svn co https://github.com/fw876/helloworld package/openwrt-packages/helloworld
 
 # 自定义定制选项
 sed -i 's#192.168.1.1#10.0.0.1#g' package/base-files/files/bin/config_generate #定制默认IP
@@ -188,7 +188,6 @@ CONFIG_PACKAGE_luci-app-control-mia=y #时间控制
 CONFIG_PACKAGE_luci-app-control-timewol=y #定时唤醒
 CONFIG_PACKAGE_luci-app-control-webrestriction=y #访问限制
 CONFIG_PACKAGE_luci-app-control-weburl=y #网址过滤
-CONFIG_PACKAGE_luci-app-flowoffload=y #Turbo ACC 网络加速
 CONFIG_PACKAGE_luci-app-nlbwmon=y #宽带流量监控
 CONFIG_PACKAGE_luci-app-zerotier=y #zerotier内网穿透
 # CONFIG_PACKAGE_luci-app-diskman is not set #磁盘管理磁盘信息
