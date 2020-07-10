@@ -170,6 +170,7 @@ CONFIG_PACKAGE_v2ray=y
 CONFIG_PACKAGE_v2ray-plugin=y
 CONFIG_PACKAGE_simple-obfs=y
 CONFIG_PACKAGE_trojan=y
+CONFIG_PACKAGE_trojan-go=y
 CONFIG_PACKAGE_brook=y
 CONFIG_PACKAGE_ipt2socks=y
 CONFIG_PACKAGE_shadowsocks-libev-config=y
