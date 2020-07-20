@@ -18,6 +18,7 @@ cat feeds.conf.default
 git clone https://github.com/kenzok8/openwrt-packages package/openwrt-packages
 git clone https://github.com/destan19/OpenAppFilter package/OpenAppFilter
 git clone https://github.com/tty228/luci-app-serverchan package/luci-app-serverchan
+git clone https://github.com/garypang13/luci-theme-edge package/luci-theme-edge
 
 # 替换更新passwall和ssrplus+
 rm -rf package/openwrt-packages/luci-app-passwall && svn co https://github.com/Lienol/openwrt-package/trunk/lienol/luci-app-passwall package/openwrt-packages/luci-app-passwall
@@ -233,6 +234,7 @@ cat >> .config <<EOF
 CONFIG_PACKAGE_luci-theme-atmaterial=y
 CONFIG_PACKAGE_luci-theme-argon_new=y
 CONFIG_PACKAGE_luci-theme-netgear=y
+CONFIG_PACKAGE_luci-theme-edge=y
 EOF
 
 # 常用软件包:

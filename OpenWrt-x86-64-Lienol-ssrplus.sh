@@ -8,6 +8,7 @@ cd openwrt
 
 # 更新feeds文件
 # sed -i 's#lienol https://github.com/Lienol/openwrt-package#lienol https://github.com/db-one/Lienol-openwrt-package#g' feeds.conf.default #更换默认包源
+sed -i 's#src-git luci https://github.com/Lienol/openwrt-luci.git;dev-17.01#src-git luci https://github.com/Lienol/openwrt-luci.git;dev-18.06#g' feeds.conf.default #更换luci版本
 cat feeds.conf.default
 
 # 更新并安装源
@@ -18,6 +19,7 @@ cat feeds.conf.default
 git clone https://github.com/kenzok8/openwrt-packages package/openwrt-packages
 git clone https://github.com/destan19/OpenAppFilter package/OpenAppFilter
 git clone https://github.com/tty228/luci-app-serverchan package/luci-app-serverchan
+git clone https://github.com/garypang13/luci-theme-edge package/luci-theme-edge
 
 # 替换更新passwall和ssrplus+
 rm -rf package/openwrt-packages/luci-app-passwall && svn co https://github.com/Lienol/openwrt-package/trunk/lienol/luci-app-passwall package/openwrt-packages/luci-app-passwall
@@ -240,6 +242,7 @@ cat >> .config <<EOF
 CONFIG_PACKAGE_luci-theme-argon-dark-mod=y
 CONFIG_PACKAGE_luci-theme-argon-light-mod=y
 CONFIG_PACKAGE_luci-theme-bootstrap=y
+CONFIG_PACKAGE_luci-theme-edge=y
 # CONFIG_PACKAGE_luci-theme-bootstrap-mod is not set
 # CONFIG_PACKAGE_luci-theme-darkmatter is not set
 # CONFIG_PACKAGE_luci-theme-freifunk-generic is not set
