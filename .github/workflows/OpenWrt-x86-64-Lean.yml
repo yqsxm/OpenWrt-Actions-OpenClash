@@ -1,5 +1,5 @@
 
-name: OpenWrt-x86-64-Lienol-ssrplus
+name: OpenWrt-x86-64-Lean
 
 on:
 # 定时触发(每周一早6点10分)
@@ -28,9 +28,9 @@ on:
 #UPLOAD_FIRMWARE上传固件目录
 
 env:
-  REPO_URL: https://github.com/Lienol/openwrt
-  REPO_BRANCH: dev-19.07
-  DIY_SH: OpenWrt-x86-64-Lienol-ssrplus.sh
+  REPO_URL: https://github.com/coolsnowwolf/lede
+  REPO_BRANCH: master
+  DIY_SH: OpenWrt-x86-64-Lean.sh
   SSH_ACTIONS: false
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
@@ -64,9 +64,10 @@ jobs:
       run: |
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
 
-    - name: 生成编译时间
+    - name: 更改时区、生成编译时间
       run: |
-        echo "::set-env name=FILENAME::$(date "+%Y_%m_%d_%H_%M_%S")"
+        sudo timedatectl set-timezone "$TZ"
+        echo "::set-env name=FILENAME::$(date "+%m_%d_%H_%M")"
 
     - name: 更新源并创建配置文件
       run: |
@@ -99,7 +100,7 @@ jobs:
       uses: actions/upload-artifact@master
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
-        name: OpenWrt_bin_Lienol_passwall_${{ env.FILENAME }}
+        name: OpenWrt_bin_Lean_${{ env.FILENAME }}
         path: openwrt/bin
 
     - name: 整理文件
@@ -114,5 +115,5 @@ jobs:
     - name: 上传固件
       uses: actions/upload-artifact@master
       with:
-        name: OpenWrt_firmware_Lienol_ssrplus_${{ env.FILENAME }}
+        name: OpenWrt_firmware_Lean_${{ env.FILENAME }}
         path: ./artifact/
