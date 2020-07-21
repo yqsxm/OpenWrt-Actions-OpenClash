@@ -27,12 +27,6 @@ rm -rf package/openwrt-packages/luci-app-ssr-plus && svn co https://github.com/f
 # 添加passwall依赖库
 # git clone https://github.com/kenzok8/small package/small
 svn co https://github.com/Lienol/openwrt-package/trunk/package package/small
-rm -rf package/small/openssl1.1
-rm -rf package/small/shadowsocksr-libev
-rm -rf package/small/syncthing
-rm -rf package/small/trojan
-rm -rf package/small/v2ray
-rm -rf package/small/verysync
 
 # 替换更新haproxy默认版本
 rm -rf feeds/packages/net/haproxy && svn co https://github.com/Lienol/openwrt-packages/trunk/net/haproxy feeds/packages/net/haproxy
