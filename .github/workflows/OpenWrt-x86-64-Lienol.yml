@@ -67,7 +67,7 @@ jobs:
     - name: 更改时区、生成编译时间
       run: |
         sudo timedatectl set-timezone "$TZ"
-        echo "::set-env name=FILENAME::$(date "+%m-%d-%H-%M")"
+        echo "::set-env name=FILENAME::$(date "+%m-%d %H:%M")"
 
     - name: 更新源并创建配置文件
       run: |
@@ -100,7 +100,7 @@ jobs:
       uses: actions/upload-artifact@master
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
-        name: OpenWrt_bin_Lienol_${{ env.FILENAME }}
+        name: OpenWrt-bin-Lienol-${{ env.FILENAME }}
         path: openwrt/bin
 
     - name: 整理文件
@@ -115,5 +115,5 @@ jobs:
     - name: 上传固件
       uses: actions/upload-artifact@master
       with:
-        name: OpenWrt_firmware_Lienol_${{ env.FILENAME }}
+        name: OpenWrt-firmware-Lienol-${{ env.FILENAME }}
         path: ./artifact/
