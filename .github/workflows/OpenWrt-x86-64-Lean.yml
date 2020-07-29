@@ -31,9 +31,10 @@ env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
   DIY_SH: OpenWrt-x86-64-Lean.sh
-  SSH_ACTIONS: true
+  SSH_ACTIONS: false
   UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
+  UPLOAD_COWTRANSFER: true
   TZ: Asia/Shanghai
 
 jobs:
@@ -78,7 +79,7 @@ jobs:
         make defconfig
 
     - name: 开启SSH远程连接
-      uses: P3TERX/debugger-action@master
+      uses: P3TERX/debugger-action@main
       if: env.SSH_ACTIONS == 'true'
 
     - name: 下载软件包
@@ -97,7 +98,7 @@ jobs:
         echo "::set-output name=status::success"
 
     - name: 上传BIN目录
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@main
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
         name: OpenWrt-bin-Lean-${{ env.FILENAME }}
@@ -113,7 +114,14 @@ jobs:
           find openwrt/bin/targets/ -name "*uefi*img*" | xargs -i mv -f {} ./artifact/
 
     - name: 上传固件
-      uses: actions/upload-artifact@master
+      uses: actions/upload-artifact@main
       with:
         name: OpenWrt-firmware-Lean-${{ env.FILENAME }}
         path: ./artifact/
+    
+    - name: Upload firmware to cowtransfer
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_COWTRANSFER == 'true' && !cancelled()
+      run: |
+        curl -fsSL git.io/file-transfer | sh
+        ./transfer cow --block 2621440 -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee cowtransfer.log
+        echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
