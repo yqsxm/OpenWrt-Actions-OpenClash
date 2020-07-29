@@ -20,6 +20,9 @@ git clone https://github.com/destan19/OpenAppFilter package/OpenAppFilter
 git clone https://github.com/tty228/luci-app-serverchan package/luci-app-serverchan
 git clone https://github.com/pymumu/luci-app-smartdns package/luci-app-smartdns
 git clone https://github.com/garypang13/luci-theme-edge package/luci-theme-edge -b 18.06
+git clone https://github.com/jefferymvp/luci-app-koolproxyR package/luci-app-koolproxyR
+git clone https://github.com/jerrykuku/node-request  package/node-request 
+git clone https://github.com/jerrykuku/luci-app-jd-dailybonus package/luci-app-jd-dailybonus
 
 # 替换更新默认argon主题
 rm -rf package/lean/luci-theme-argon && git clone https://github.com/jerrykuku/luci-theme-argon package/luci-theme-argon -b 18.06
