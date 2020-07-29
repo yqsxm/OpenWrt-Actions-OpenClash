@@ -99,15 +99,16 @@ cat >> .config <<EOF
 CONFIG_TARGET_IMAGES_GZIP=y
 EOF
 
-# 编译UEFI固件:
-# cat >> .config <<EOF
-# CONFIG_EFI_IMAGES=y
-# EOF
+# 不编译UEFI固件:
+cat >> .config <<EOF
+# CONFIG_EFI_IMAGES is not set
+EOF
 
 # IPv6支持:
 cat >> .config <<EOF
 CONFIG_PACKAGE_dnsmasq_full_dhcpv6=y
 CONFIG_PACKAGE_ipv6helper=y
+CONFIG_PACKAGE_kmod-b44=y
 EOF
 
 # 多文件系统支持:
@@ -256,8 +257,8 @@ EOF
 
 # 取消编译VMware镜像以及镜像填充 (不要删除被缩进的注释符号):
 cat >> .config <<EOF
-CONFIG_TARGET_IMAGES_PAD is not set
-CONFIG_VMDK_IMAGES is not set
+# CONFIG_TARGET_IMAGES_PAD is not set
+# CONFIG_VMDK_IMAGES is not set
 EOF
 
 # 
