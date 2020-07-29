@@ -84,14 +84,14 @@ touch ./.config
 # 编译x64固件:
 cat >> .config <<EOF
 CONFIG_TARGET_x86=y
-CONFIG_TARGET_x86_64=y
-CONFIG_TARGET_x86_64_Generic=y
+CONFIG_TARGET_x86_generic=y
+CONFIG_TARGET_x86_generic_Generic=y
 EOF
 
 # 设置固件大小:
 cat >> .config <<EOF
-CONFIG_TARGET_KERNEL_PARTSIZE=16
-CONFIG_TARGET_ROOTFS_PARTSIZE=160
+CONFIG_TARGET_KERNEL_PARTSIZE=256
+CONFIG_TARGET_ROOTFS_PARTSIZE=800
 EOF
 
 # 固件压缩:
@@ -100,9 +100,9 @@ CONFIG_TARGET_IMAGES_GZIP=y
 EOF
 
 # 编译UEFI固件:
-cat >> .config <<EOF
-CONFIG_EFI_IMAGES=y
-EOF
+# cat >> .config <<EOF
+# CONFIG_EFI_IMAGES=y
+# EOF
 
 # IPv6支持:
 cat >> .config <<EOF
@@ -136,7 +136,7 @@ CONFIG_PACKAGE_luci-app-openclash=y #OpenClash
 CONFIG_PACKAGE_luci-app-serverchan=y #微信推送
 CONFIG_PACKAGE_luci-app-eqos=y #IP限速
 CONFIG_PACKAGE_luci-app-smartdns=y #smartdns服务器
-# CONFIG_PACKAGE_luci-app-adguardhome=y #ADguardhome
+CONFIG_PACKAGE_luci-app-adguardhome=y #ADguardhome
 EOF
 
 # ShadowsocksR插件:
@@ -201,17 +201,17 @@ CONFIG_PACKAGE_luci-app-sfe=y #高通开源的 Shortcut FE 转发加速引擎
 # CONFIG_PACKAGE_luci-app-flowoffload is not set #开源 Linux Flow Offload 驱动
 # CONFIG_PACKAGE_luci-app-haproxy-tcp is not set #Haproxy负载均衡
 # CONFIG_PACKAGE_luci-app-diskman is not set #磁盘管理磁盘信息
-# CONFIG_PACKAGE_luci-app-transmission is not set #TR离线下载
-# CONFIG_PACKAGE_luci-app-qbittorrent is not set #QB离线下载
+CONFIG_PACKAGE_luci-app-transmission=y #TR离线下载
+CONFIG_PACKAGE_luci-app-qbittorrent=y #QB离线下载
 # CONFIG_PACKAGE_luci-app-amule is not set #电驴离线下载
 # CONFIG_PACKAGE_luci-app-xlnetacc is not set #迅雷快鸟
-# CONFIG_PACKAGE_luci-app-hd-idle is not set #磁盘休眠
+CONFIG_PACKAGE_luci-app-hd-idle=y #磁盘休眠
 # CONFIG_PACKAGE_luci-app-wrtbwmon is not set #实时流量监测
-# CONFIG_PACKAGE_luci-app-unblockmusic is not set #解锁网易云灰色歌曲
+CONFIG_PACKAGE_luci-app-unblockmusic=y #解锁网易云灰色歌曲
 # CONFIG_PACKAGE_luci-app-airplay2 is not set #Apple AirPlay2音频接收服务器
 # CONFIG_PACKAGE_luci-app-music-remote-center is not set #PCHiFi数字转盘遥控
 # CONFIG_PACKAGE_luci-app-usb-printer is not set #USB打印机
-#CONFIG_PACKAGE_luci-app-sqm is not set #SQM智能队列管理
+# CONFIG_PACKAGE_luci-app-sqm is not set #SQM智能队列管理
 #
 # VPN相关插件(禁用):
 #
@@ -225,7 +225,7 @@ CONFIG_PACKAGE_luci-app-sfe=y #高通开源的 Shortcut FE 转发加速引擎
 #
 # CONFIG_PACKAGE_luci-app-minidlna is not set #miniDLNA服务
 # CONFIG_PACKAGE_luci-app-vsftpd is not set #FTP 服务器
-# CONFIG_PACKAGE_luci-app-samba is not set #网络共享
+CONFIG_PACKAGE_luci-app-samba=y #网络共享
 # CONFIG_PACKAGE_autosamba is not set #网络共享
 # CONFIG_PACKAGE_samba36-server is not set #网络共享
 EOF
@@ -256,8 +256,8 @@ EOF
 
 # 取消编译VMware镜像以及镜像填充 (不要删除被缩进的注释符号):
 cat >> .config <<EOF
-# CONFIG_TARGET_IMAGES_PAD is not set
-# CONFIG_VMDK_IMAGES is not set
+CONFIG_TARGET_IMAGES_PAD is not set
+CONFIG_VMDK_IMAGES is not set
 EOF
 
 # 
